@@ -28,7 +28,7 @@ def main(loger):
         return 
     
     
-    tables = {'parse': 8, 'parse_a': 5, 'parse_h': 5, 'parse_img': 5}
+    tables = ('parse', 'parse_a', 'parse_h', 'parse_img')
     for table in tables:
         sql = f'DELETE FROM {table}'
         db_out.cursor.execute(sql)
@@ -39,8 +39,9 @@ def main(loger):
         loger.log(f'Обробляємо таблицю: {table}')
         sql = f'SELECT * FROM {table}'
         db_inp.cursor.execute(sql)
+        count = len(db_inp.cursor.description)
         result = (e for e in db_inp.cursor.fetchall())
-        s_string = '%s, '*tables[table]
+        s_string = '%s, '*count
         sql = f'INSERT INTO {table} VALUES({s_string[:-2]})'
         db_out.executemany(sql, result)
         db_out.mydb.commit()
