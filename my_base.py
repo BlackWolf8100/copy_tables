@@ -8,7 +8,7 @@ import sqlite3
 class My_base():
     def __init__(self, dbfile = None, logger = False):
         if dbfile == None: 
-            with open('c:\\API\Mykola\ikscs_links\credentials_MK.json') as f:
+            with open('c:\\API\Mykola\copy_tables\credentials_MK.json') as f:
                 self.cfg = json.load(f)
         self.dbfile = dbfile
         self.logger = logger

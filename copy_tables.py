@@ -29,6 +29,7 @@ def main(loger):
     
     
     tables = ('parse', 'parse_a', 'parse_h', 'parse_img')
+    tables = []
     for table in tables:
         sql = f'DELETE FROM {table}'
         db_out.cursor.execute(sql)
@@ -45,12 +46,20 @@ def main(loger):
         sql = f'INSERT INTO {table} VALUES({s_string[:-2]})'
         db_out.executemany(sql, result)
         db_out.mydb.commit()
-        
-        
+
+    sql = 'SELECT status_code, COUNT(*) FROM `parse_500` GROUP BY status_code'
+    db_out.cursor.execute(sql)        
+    result = [e for e in db_out.cursor.fetchall()]    
+    print(result)    
+    for status_code, count in result:
+        if status_code >= 500:
+            send_email(result)
+    
     db_inp.close()
     db_out.close()
 
-
+def send_email(data):
+    pass
         
 if __name__ == '__main__':
     loger = My_loger(LOG_FILE)
