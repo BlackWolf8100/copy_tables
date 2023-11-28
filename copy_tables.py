@@ -1,5 +1,6 @@
 from my_base import My_base
 from my_loger import My_loger
+from report import send_report
 
 
 LOG_FILE = 'c:\\API\Mykola\copy_tables\copy_tables.log'
@@ -47,20 +48,19 @@ def main(loger):
         db_out.executemany(sql, result)
         db_out.mydb.commit()
 
-    sql = 'SELECT status_code, COUNT(*) FROM `parse_500` GROUP BY status_code'
+    sql = 'SELECT domain, status_code, COUNT(*) FROM `parse` GROUP BY domain, status_code'
     db_out.cursor.execute(sql)        
     result = [e for e in db_out.cursor.fetchall()]    
     print(result)    
-    for status_code, count in result:
+    for domain, status_code, count in result:
         if status_code >= 500:
-            send_email(result)
+            send_report(result)
+            break
     
     db_inp.close()
     db_out.close()
 
-def send_email(data):
-    pass
-        
+
 if __name__ == '__main__':
     loger = My_loger(LOG_FILE)
     loger.log(f'copy_tables starting')
