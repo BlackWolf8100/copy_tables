@@ -30,7 +30,7 @@ def main(loger):
     
     
     tables = ('parse', 'parse_a', 'parse_h', 'parse_img')
-    tables = []
+
     for table in tables:
         sql = f'DELETE FROM {table}'
         db_out.cursor.execute(sql)
