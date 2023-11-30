@@ -52,10 +52,8 @@ def main(loger):
     db_out.cursor.execute(sql)        
     result = [e for e in db_out.cursor.fetchall()]    
     print(result)    
-    for domain, status_code, count in result:
-        if status_code >= 500:
-            send_report(result)
-            break
+
+    send_report(result)
     
     db_inp.close()
     db_out.close()
