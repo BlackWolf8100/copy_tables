@@ -29,7 +29,8 @@ def main(loger):
         return 
     
     
-    tables = ('parse', 'parse_a', 'parse_h', 'parse_img')
+    # tables = ('parse', 'parse_a', 'parse_h', 'parse_img')
+    tables = ('parse', 'parse_img')
 
     for table in tables:
         sql = f'DELETE FROM {table}'
