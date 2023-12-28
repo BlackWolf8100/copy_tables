@@ -26,6 +26,8 @@ def send_report(data, recipient = None):
 def make_body(data):
     flag_400, flag_500 = False, False
     for domain, status_code, count in data:
+        if not status_code:
+            continue
         if status_code >= 500:
             flag_500 = True
         elif (status_code >= 400) and (status_code < 500):
